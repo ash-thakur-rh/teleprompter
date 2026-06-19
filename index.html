@@ -145,6 +145,25 @@
     resize: vertical;
   }
 
+  .theme-toggle {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 0.4rem 0.9rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--text);
+  }
+
   /* ---------- PROMPTER SCREEN ---------- */
   .prompter-screen {
     display: none;
@@ -337,6 +356,7 @@
 
 <!-- INPUT SCREEN -->
 <div class="input-screen" id="inputScreen">
+  <button class="theme-toggle" id="inputThemeBtn" title="Toggle light/dark theme">Light</button>
   <h1>TELEPROMPTER</h1>
   <p>Load a markdown file with sections separated by <code>---</code>. Each section will be shown one at a time in large, readable text.</p>
 
@@ -495,10 +515,15 @@
 
   // Theme toggle
   const themeBtn = document.getElementById('themeBtn');
-  themeBtn.addEventListener('click', () => {
+  const inputThemeBtn = document.getElementById('inputThemeBtn');
+  function toggleTheme() {
     document.body.classList.toggle('light');
-    themeBtn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
-  });
+    const label = document.body.classList.contains('light') ? 'Dark' : 'Light';
+    themeBtn.textContent = label;
+    inputThemeBtn.textContent = label;
+  }
+  themeBtn.addEventListener('click', toggleTheme);
+  inputThemeBtn.addEventListener('click', toggleTheme);
 
   // Mirror
   document.getElementById('mirrorBtn').addEventListener('click', () => {

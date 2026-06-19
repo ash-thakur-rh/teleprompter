@@ -145,6 +145,26 @@
     resize: vertical;
   }
 
+  .separator-setting {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  #separator-input {
+    width: 100px;
+    padding: 0.4rem 0.6rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
   .theme-toggle {
     position: absolute;
     top: 1.2rem;
@@ -358,7 +378,12 @@
 <div class="input-screen" id="inputScreen">
   <button class="theme-toggle" id="inputThemeBtn" title="Toggle light/dark theme">Light</button>
   <h1>TELEPROMPTER</h1>
-  <p>Load a markdown file with sections separated by <code>---</code>. Each section will be shown one at a time in large, readable text.</p>
+  <p>Load a markdown file with sections separated by a delimiter. Each section will be shown one at a time in large, readable text.</p>
+
+  <div class="separator-setting">
+    <label for="separator-input">Section separator:</label>
+    <input type="text" id="separator-input" value="---" placeholder="---">
+  </div>
 
   <div class="input-methods">
     <div class="input-card">
@@ -420,8 +445,10 @@
   let fontIndex = 1;
 
   function parseSections(md) {
+    const sep = document.getElementById('separator-input').value || '---';
+    const escaped = sep.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     return md
-      .split(/\n---\n/)
+      .split(new RegExp('\\n' + escaped + '\\n'))
       .map(s => s.trim())
       .filter(s => s.length > 0);
   }

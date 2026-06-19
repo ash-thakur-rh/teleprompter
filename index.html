@@ -16,6 +16,22 @@
     --text-dim: #888;
     --accent: #4a9eff;
     --accent-dim: #1a3a5c;
+    --blockquote-text: #ccc;
+    --strong-text: #fff;
+    --em-text: #bbb;
+  }
+
+  .light {
+    --bg: #f5f5f5;
+    --surface: #ffffff;
+    --border: #ddd;
+    --text: #1a1a1a;
+    --text-dim: #666;
+    --accent: #0066cc;
+    --accent-dim: #e0efff;
+    --blockquote-text: #444;
+    --strong-text: #000;
+    --em-text: #555;
   }
 
   body {
@@ -226,7 +242,7 @@
     border-left: 3px solid var(--accent);
     padding-left: 1.2em;
     margin: 0.8em 0;
-    color: #ccc;
+    color: var(--blockquote-text);
   }
   .section-content code {
     background: var(--surface);
@@ -244,8 +260,8 @@
   }
   .section-content ul, .section-content ol { margin-left: 1.2em; margin-bottom: 0.8em; }
   .section-content li { margin-bottom: 0.3em; }
-  .section-content strong { font-weight: 600; color: #fff; }
-  .section-content em { color: #bbb; }
+  .section-content strong { font-weight: 600; color: var(--strong-text); }
+  .section-content em { color: var(--em-text); }
   .section-content table { border-collapse: collapse; width: 100%; margin: 0.8em 0; font-size: 0.85em; }
   .section-content th, .section-content td { border: 1px solid var(--border); padding: 0.4em 0.8em; text-align: left; }
   .section-content th { background: var(--surface); }
@@ -352,6 +368,7 @@
     <div class="top-bar-actions">
       <button id="fontDownBtn" title="Decrease font">A-</button>
       <button id="fontUpBtn" title="Increase font">A+</button>
+      <button id="themeBtn" title="Toggle light/dark theme">Light</button>
       <button id="mirrorBtn" title="Mirror mode">Mirror</button>
       <button id="backBtn" title="Back to input">Exit</button>
     </div>
@@ -474,6 +491,13 @@
       fontIndex++;
       prompterScreen.classList.add(fontSizes[fontIndex]);
     }
+  });
+
+  // Theme toggle
+  const themeBtn = document.getElementById('themeBtn');
+  themeBtn.addEventListener('click', () => {
+    document.body.classList.toggle('light');
+    themeBtn.textContent = document.body.classList.contains('light') ? 'Dark' : 'Light';
   });
 
   // Mirror
